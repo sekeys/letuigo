@@ -4,9 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Configure from './configure/index'
+import iview from 'iview'
+import 'iview/dist/styles/iview.css';
+import Axios from 'axios';
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
+Vue.use(iview);
 
+Vue.use(VueCookies);
 
 
 Axios.defaults.withCredentials=true;
