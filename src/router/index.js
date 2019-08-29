@@ -42,6 +42,14 @@ var router=[
       return require(['../pages/user/index'],resolve);
     }
   },
+  //购物页面
+  {
+    path: '/shopping',
+    name: '/shopping',
+    component: (resolve)=>{
+      return require(['../pages/shopping/index'],resolve);
+    }
+  },
 ]
 
 

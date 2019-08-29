@@ -17,14 +17,28 @@ Vue.use(VueCookies);
 
 Axios.defaults.withCredentials=true;
 Axios.interceptors.request.use(function (config) {
-  // 在发送请求之前做些什么
-  config.url = `${Configure.host}${config.url}`
+    // 在发送请求之前做些什么
+    config.url = `${Configure.host}${config.url}`
   
-  return  config;
+    return  config;
 }, function (error) {
-  // 对请求错误做些什么
-  return Promise.reject(error);
+    // 对请求错误做些什么
+    return Promise.reject(error);
 });
+Axios.interceptors.response.use(res=>{
+    var data=res.data;
+    if(!data){
+      return data;
+    }else{
+      if(data.success){
+        return data.data;
+      }else{
+        return Promise.reject(data);
+      }
+    }
+},error=>{
+    return Promise.reject(error);
+})
 
 Vue.prototype.$http=Axios;
 Vue.prototype.$get=function(url,data){
