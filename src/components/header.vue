@@ -9,7 +9,7 @@
                 <div v-if="!hasLogin"  @click="onRedirectToLogin" class="layout_line high-light-font-alway high-light-font">
                     用户登陆
                 </div>
-                <div else  @click="onRedirectToPersonInfo" class="layout_line high-light-font-alway high-light-font">
+                <div v-else  @click="onRedirectToPersonInfo" class="layout_line high-light-font-alway high-light-font">
                     <span>{{nick}}</span>
                     <span style="display:inline-block;margin-left:5px;">欢迎回来</span>
                 </div>
@@ -39,10 +39,11 @@
 </template>
 
 <script>
+import Configure from '../configure/index'
 export default {
     data(){
         return {
-            hasLogin:true,
+            hasLogin:false,
             nick:"Sekeys",
             msgcount:0
 
@@ -53,7 +54,7 @@ export default {
     },
     methods:{
         onRedirectToLogin(){
-            window.location.href = `${"1"}`;
+            this.$redirectToLogin();
         },
         onRedirectToPersonInfo(){
 

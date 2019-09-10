@@ -19,7 +19,11 @@ Axios.defaults.withCredentials=true;
 Axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     config.url = `${Configure.host}${config.url}`
-  
+    config.headers["token"] = Configure.token();
+    var reftoken = Configure.refererToken();
+    if(reftoken){
+      config.headers["referer-token"] = reftoken;
+    }
     return  config;
 }, function (error) {
     // 对请求错误做些什么
@@ -52,8 +56,16 @@ Vue.prototype.$toUrl=function(d){
   }
   return r;
 }
+Vue.prototype.$redirectToLogin=function(){
+    window.location.href = `//account.zhimifan.com/login?appkey=${Configure.appkey}&origin=${Configure.acceptLoginPage}`;
+}
+Vue.prototype.$Message.config({
+  top: 250,
+  duration: 3
+});
 
 
+Vue.prototype.$hasLogin = !!Configure.token();
 
 
 

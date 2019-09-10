@@ -7,16 +7,13 @@
 </template>
 
 <script>
-//import Header from "./Components/Header"
-import Navigation from "./Components/Navigation"
-
 import Header from "./Components/Backend/header"
+import Navigation from "./Components/Navigation"
 
 export default {
   components:{Header,Navigation},
   name: 'App'
 }
-//#2c3e50;
 </script>
 
 
@@ -30,8 +27,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background: white;
-  
+  background: #2c3e50;
   width: 100%;
   margin: 0px;
   padding: 0px;

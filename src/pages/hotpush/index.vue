@@ -77,7 +77,7 @@ export default {
             if(reqd.sort){
                 reqd.sort = reqd.sort+(this.desc?"_desc":"_asc")
             }
-            this.$get("/qn.lego.product.query.taobao",reqd).then(data=>{
+            this.$get("/qn.lego.product.query.hot",reqd).then(data=>{
                 this.state.loading=false;
                 if(data.isError){
                     this.$Message.warning("请求数据失败，请重新刷新");

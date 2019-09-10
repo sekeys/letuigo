@@ -50,6 +50,14 @@ var router=[
       return require(['../pages/shopping/index'],resolve);
     }
   },
+  //优惠热推
+  {
+    path: '/hotpush',
+    name: '/hotpush',
+    component: (resolve)=>{
+      return require(['../pages/hotpush/index'],resolve);
+    }
+  },
 ]
 
 
