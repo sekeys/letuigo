@@ -19,6 +19,27 @@ var router=[
                 return require(['../pages/m/promotion/index'],resolve);
             }
         },
+        {
+          path:"supersearch",
+          name:"promotion/supersearch",
+          component:(resolve)=>{
+              return require(['../pages/m/promotion/index'],resolve);
+          }
+        },
+        {
+          path:"collect",
+          name:"/m/promotion/collect",
+          component:(resolve)=>{
+              return require(['../pages/m/promotion/index'],resolve);
+          }
+        },
+        {
+          path:"/m/promotion/subscribe",
+          name:"/m/promotion/subscribe",
+          component:(resolve)=>{
+              return require(['../pages/m/promotion/index'],resolve);
+          }
+        },
     ]
   },
   //团队
@@ -101,7 +122,15 @@ var router=[
             path:"",
             name:"account/index",
             component:(resolve)=>{
-                return require(['../pages/m/promotion/index'],resolve);
+                return require(['../pages/m/account/index'],resolve);
+            }
+        },
+        //首页
+        {
+            path:"information",
+            name:"account/information",
+            component:(resolve)=>{
+                return require(['../pages/m/account/information'],resolve);
             }
         },
     ]
