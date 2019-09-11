@@ -58,6 +58,7 @@ var router=[
       return require(['../pages/hotpush/index'],resolve);
     }
   },
+  
 ]
 
 
@@ -68,6 +69,6 @@ var router=[
 
 
 export default new Router({
-  mode: 'history',
+  //mode: 'history',
   routes: router
 })
