@@ -14,6 +14,21 @@ const team=[
             },
         ]
     },
+    {
+        title:"商务合作",
+        children:[
+            {
+                id:"/m/team/provider",
+                title:"供应商合作",
+                href:"/m/team/information"
+            },
+            {
+                id:"/m/team/members",
+                title:"成员管理",
+                href:"/m/team/members"
+            },
+        ]
+    },
 ]
 
 const promotion=[
@@ -136,10 +151,31 @@ const account=[
                 href:"/m/account/certify"
             },
             {
+                id:"/m/account/payaccount",
+                title:"支付账号",
+                href:"/m/account/payaccount"
+            },
+            {
                 id:"/m/account/provider",
                 title:"供货商认证",
                 href:"/m/account/provider"
             }
+        ]
+    },
+    {
+        id:"/m/account/settlement",
+        title:"结算中心",
+        children:[
+            {
+                id:"/m/account/settlement/income",
+                title:"收入记录",
+                href:"/m/account/settlement/income"
+            },
+            {
+                id:"/m/account/settlement/withdraw",
+                title:"提现记录",
+                href:"/m/account/settlement/withdraw"
+            },
         ]
     },
     {
