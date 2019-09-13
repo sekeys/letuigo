@@ -10,7 +10,7 @@
 //import Header from "./Components/Header"
 import Navigation from "./Components/Navigation"
 
-import Header from "./Components/Backend/header"
+import Header from "./Components/header"
 
 export default {
   components:{Header,Navigation},
