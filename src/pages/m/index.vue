@@ -2,7 +2,7 @@
 <div >
     <SlideMenu :category="category"></SlideMenu>
     <div :style="getContetnCss()">
-        <div :style="'background:white;width:100%;min-height:'+(height-140) +'px;margin-top:15px;'">
+        <div class="bck-app-content" :style="'min-height:'+(height-140) +'px;'">
             <router-view/>
         </div>
         <CopyWriter>
@@ -64,4 +64,42 @@ export default {
 
 
 <style>
+.bck-app-content{
+    background:white;
+    width:100%;
+    margin-top:15px;
+}
+.inf-card{
+    width: 90%;
+    background: white;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    padding: 24px;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,.1);
+}
+.inf-card .header{
+    margin:10px 20px;
+    height: 30px;
+    line-height: 30px;
+}
+.inf-card  .content{
+    margin-left:20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.mt10{
+    margin-top: 10px;
+}
+.mt15{
+    margin-top: 15px;
+}
+.mt20{
+    margin-top: 20px;
+}
+.mh340{
+    min-height: 340px;
+}
 </style>

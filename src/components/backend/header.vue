@@ -4,22 +4,22 @@
         <div class="logo" style="float:left;">
             <h2 style="display:inline-block;">埃勒苟</h2>
             <div style="display:inline-block;margin-left:10px;">
-                <div @click="onRedirectToHome" class="info-nav-item high-light-font">
+                <div @click="onRedirectToHome" :class="'info-nav-item high-light-font '+(selected=='index'?'selected':'')">
                     首页
                 </div>
-                <div  @click="onRedirectToPromotion" class="info-nav-item high-light-font">
+                <div  @click="onRedirectToPromotion" :class="'info-nav-item high-light-font '+(selected=='promotion'?'selected':'') ">
                     我要推广
                 </div>
-                <div  @click="onRedirectToTeam" class="info-nav-item high-light-font">
+                <div  @click="onRedirectToTeam" :class="'info-nav-item high-light-font '+(selected=='team'?'selected':'')">
                     推广团队
                 </div>
-                <div  @click="onRedirectToProvider" class="info-nav-item high-light-font">
+                <div  @click="onRedirectToProvider" :class="'info-nav-item high-light-font '+(selected=='provider'?'selected':'')">
                     我是供应商
                 </div>
-                <div  @click="onRedirectToReport" class="info-nav-item high-light-font">
+                <div  @click="onRedirectToReport" :class="'info-nav-item high-light-font '+(selected=='report'?'selected':'')">
                     效果报表
                 </div>
-                <div  @click="onRedirectToAccount" class="info-nav-item high-light-font">
+                <div  @click="onRedirectToAccount" :class="'info-nav-item high-light-font '+(selected=='account'?'selected':'')">
                     账号管理
                 </div>
             </div>
@@ -56,11 +56,21 @@ export default {
                 isProvider:false,
                 isTalent:false
             },
-            msgcount:0
+            msgcount:0,
+            selected:"",
+
+
 
         };
     },
     created(){
+        var path =this.$route.fullPath;
+        var segments = path.split('/');
+        if(path.startsWith("/")){
+            this.selected = segments[2]
+        }else{
+            this.selected = segments[1]
+        }
 
     },
     methods:{
@@ -104,6 +114,20 @@ export default {
                 path:"/m/account/message"
             })
         },
+    },
+    watch:{
+        $route(to,from){
+            var geto= to;
+            console.log(to);
+            var path =to.fullPath;
+            
+            var segments = path.split('/');
+            if(path.startsWith("/")){
+                this.selected = segments[2]
+            }else{
+                this.selected = segments[1]
+            }
+        }
     }
 }
 </script>
@@ -158,7 +182,7 @@ export default {
     margin-right: 10px;
     vertical-align: middle;
 }
-.info-nav-item.select{
+.info-nav-item.selected{
     border-bottom:#ff464e solid 3px;
 }
 </style>>
