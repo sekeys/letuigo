@@ -24,26 +24,82 @@
             <div class="inf-item">
                 <p class="inf-label">邀请码：</p>
                 <p class="inf-value">{{u.invitecode}}</p>
+                <p class="inf-value" style="margin-left:20px;">
+                    <Tag  color="volcano">邀请好友</Tag>
+                </p>
+                
             </div>
         </div>
     </div>
     <div class="inf-card mt10">
         <div class="header" style="font-size:13px;margin-top:0px;">
-            <Icon type="ios-card" size="19" style="color:#2d8cf0;"/>
+            <XIcon type="money-income" size="18" style="color:#2d8cf0;font-weight:600;"/>
             <p style="display:inline-block;margin-left:5px;font-size:13px;font-weight:600;">
-                提现管理
+                收益管理
             </p>
         </div>
         <div class="content">
-            <div v-if="canWithdraw" style="padding-top:20px;">
+            <div style="margin-top:30px;margin-bottom:25px;">
+                <Row :gutter="32">
+                    <Col span="8">
+                        <div style="height:90px;width:100%;text-align:center;display:inline-block;">
+                            <div style="margin-top:15px;">
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;">近7日预估收益</p>
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
+                                    <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
+                                    <span style="color:#ff464e;margin-left:3px;">
+                                        12530
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col span="8">
+                        <div style="height:90px;width:100%;text-align:center;display:inline-block;">
+                            <div style="margin-top:15px;">
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;">近7日结算收益</p>
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
+                                    <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
+                                    <span style="color:#ff464e;margin-left:3px;">
+                                        12530.00
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col span="8">
+                        <div style="height:90px;width:100%;text-align:center;display:inline-block;">
+                            <div style="margin-top:15px;">
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;">可提现余额</p>
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
+                                    <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
+                                    <span style="color:#ff464e;margin-left:3px;">
+                                        12530.00
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+            <div v-if="canWithdraw" style="padding-top:20px;margin-top:10px;margin-bottom:25px;">
+                <div style="height:35px;line-height:35px;margin-top:10px;margin-bottom:25px;">
+                    <Icon type="ios-card" size="19" style="color:#2d8cf0;"/>
+                    <p style="display:inline-block;margin-left:5px;font-size:13px;font-weight:600;">
+                        收益提现
+                    </p>
+                </div>
                 <!--支付体现结算卡-->
-                <Row>
+                <Row :gutter="32">
                     <template v-for="(item,index) in pays">
-                        <Col span="4" :key="index">
+                        <Col span="6" :key="index">
                             <div :class="'pay-withdraw-card '+(item.isDefault?' pay-default ':'') " :key="index">
                                 <div class="title">
-                                    <div class="icon">
-                                        <Icon type="ios-card" size="19" style="color:#2d8cf0;"/>
+                                    <div v-if='item.type=="alipay"' class="icon">
+                                        <XIcon type="alipay2" size="14" style="color:#2d8cf0;"/>
+                                    </div>
+                                    <div v-else-if='item.type=="wechat"' class="icon">
+                                        <XIcon type="wechat2" size="14" style="color:#2d8cf0;"/>
                                     </div>
                                     <div class="text">
                                         {{item.type=="alipay"?"阿里支付宝": (item.type=="wechatpay"?"微信支付":item.type)}}
@@ -73,7 +129,9 @@
 </template>
 
 <script>
+import XIcon from '../../../components/icon'
 export default {
+    components:{XIcon},
     data(){
         return {
             u:{
@@ -89,6 +147,12 @@ export default {
                     account:"Awwwxxxxa",
                     "name":"微信支付",
                     isDefault:true,
+                },
+                {
+                    type:"wechat",
+                    account:"Awwwxxxxa",
+                    "name":"微信支付",
+                    isDefault:false,
                 }
             ]
         }
@@ -115,7 +179,7 @@ export default {
         margin:15px 0;
     }
     .pay-withdraw-card{
-        height: 129px;
+        height: 149px;
         width: 100%;
         border: 1px solid #bdc6cf;
         cursor: pointer;
@@ -136,7 +200,10 @@ export default {
     .pay-withdraw-card .title .icon{
         display: inline-block;
     }
-
+    .pay-withdraw-card .account{
+        height: 35px;
+        line-height: 35px;
+    }
     .pay-withdraw-card .title .text{
         display: inline-block;
         font-size: 12px;
@@ -148,7 +215,7 @@ export default {
         font-weight: 700;
     }
     .pay-withdraw-card .footer .text{
-        margin-top:12px;
+        margin-top:22px;
         width: 100%;
         text-align: right;
         font-size: 12px;

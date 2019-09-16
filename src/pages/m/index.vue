@@ -89,7 +89,9 @@ export default {
     margin-bottom: 10px;
 
 }
-
+.inf-card .content .list{
+    margin-top:15px;
+}
 .mt10{
     margin-top: 10px;
 }

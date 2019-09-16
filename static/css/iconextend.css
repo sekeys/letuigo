@@ -1,0 +1,39 @@
+
+.i-icon-money-income:before {
+    content: "\e67c";
+}.i-icon-money-cashout:before {
+    content: "\e67d";
+}
+.i-icon-gold:before {
+    content: "\e643";
+}
+.i-icon-gold2:before {
+    content: "\e611";
+}
+.i-icon-idcard:before {
+    content: "\e61a";
+}
+.i-icon-unauth:before {
+    content: "\e68b";
+}
+.i-icon-auth:before {
+    content: "\e68d";
+}
+.i-icon-unauth-out:before {
+    content: "\e64e";
+}
+.i-icon-auth-out:before {
+    content: "\e695";
+}
+.i-icon-auth-person:before {
+    content: "\e6ac";
+}
+.i-icon--trend:before{
+    content: "\e680";
+}
+.i-icon--trend2:before{
+    content: "\e68c";
+}
+.i-icon-desktop-trend:before{
+    content: "\e627";
+}

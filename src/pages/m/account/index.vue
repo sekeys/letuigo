@@ -118,6 +118,9 @@ export default {
     height: 30px;
     line-height: 30px;
 }
+.list{
+    
+}
 </style>
 
 <style>
