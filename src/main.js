@@ -6,6 +6,7 @@ import router from './router'
 import Configure from './configure/index'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css';
+import '../static/css/iconfont.css';
 import Axios from 'axios';
 import VueCookies from 'vue-cookies'
 

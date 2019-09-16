@@ -133,6 +133,78 @@ var router=[
                 return require(['../pages/m/account/information'],resolve);
             }
         },
+        //certify
+        {
+          path:"certify",
+          name:"account/certify",
+          component:(resolve)=>{
+              return require(['../pages/m/account/idcertify'],resolve);
+          }
+        },
+        //certifing
+        {
+          path:"certifing",
+          name:"account/certifing",
+          component:(resolve)=>{
+              return require(['../pages/m/account/idcertifing'],resolve);
+          }
+        },
+        //payaccount
+        {
+          path:"payaccount",
+          name:"account/payaccount",
+          component:(resolve)=>{
+              return require(['../pages/m/account/payaccount'],resolve);
+          }
+        },
+        //payaccount/add
+        {
+          path:"payaccount/add",
+          name:"account/payaccount/add",
+          component:(resolve)=>{
+              return require(['../pages/m/account/payaccount'],resolve);
+          }
+        },
+        //provider
+        {
+          path:"provider",
+          name:"account/provider",
+          component:(resolve)=>{
+              return require(['../pages/m/account/providercertify'],resolve);
+          }
+        },
+        //settlement/income
+        {
+          path:"settlement/income",
+          name:"account/settlement/income",
+          component:(resolve)=>{
+              return require(['../pages/m/account/settlement/income'],resolve);
+          }
+        },
+        //settlement/cashout
+        {
+          path:"settlement/withdraw",
+          name:"account/settlement/withdraw",
+          component:(resolve)=>{
+              return require(['../pages/m/account/settlement/cashout'],resolve);
+          }
+        },
+        //talent/media
+        {
+          path:"talent/media",
+          name:"account/talent/media",
+          component:(resolve)=>{
+              return require(['../pages/m/account/talent/mediaaccount'],resolve);
+          }
+        },
+        //talent/video
+        {
+          path:"talent/video",
+          name:"account/talent/video",
+          component:(resolve)=>{
+              return require(['../pages/m/account/talent/media'],resolve);
+          }
+        },
     ]
   },
 ]

@@ -188,9 +188,9 @@ const account=[
                 href:"/m/account/talent/media"
             },
             {
-                id:"/m/account/video",
+                id:"/m/account/talent/video",
                 title:"视频集",
-                href:"/m/account/video"
+                href:"/m/account/talent/video"
             }
         ]
     },

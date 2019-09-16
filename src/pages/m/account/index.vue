@@ -28,7 +28,7 @@
     </div>
     <div class="information-header mt15 mh340">
         <div class="item" style="font-size:13px;margin-top:0px;">
-            <Icon type="ios-pulse-outline" size="17" />
+            <IIcon type="trend" size="17" />
             <h3 style="display:inline-block;margin-left:5px;">
                 收益趋势图
             </h3>
@@ -39,7 +39,7 @@
     </div>
     <div class="information-header mt15 mh340">
         <div class="item" style="font-size:13px;margin-top:0px;">
-            <Icon type="ios-person-outline" size="18" />
+            <IIcon type="ios-person-outline" size="18" />
             <h3 style="display:inline-block;margin-left:5px;">
                 我的受邀好友
             </h3>
@@ -48,7 +48,7 @@
     </div>
     <div class="information-header mt15 mh340">
         <div class="item" style="font-size:13px;margin-top:0px;">
-            <Icon type="ios-pulse-outline" size="18" />
+            <IIcon type="ios-pulse-outline" size="18" />
             <h3 style="display:inline-block;margin-left:5px;">
                 收益趋势图
             </h3>
@@ -60,7 +60,9 @@
 </template>
 
 <script>
+import IIcon from '../../../components/icon'
 export default {
+    components:{IIcon},
     data(){
         return {
             u:{
@@ -110,11 +112,14 @@ export default {
 
 }
 .information-header .item-light{
-    margin-left: 5px 20px;
+    margin:5px 20px;
     font-size: 12px;
     color: #999999;
     height: 30px;
     line-height: 30px;
+}
+.list{
+    
 }
 </style>
 
