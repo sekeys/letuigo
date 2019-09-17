@@ -90,7 +90,7 @@
                     </p>
                 </div>
                 <!--支付体现结算卡-->
-                <Row :gutter="32">
+                <Row v-if="pays&&pays.length" :gutter="32">
                     <template v-for="(item,index) in pays">
                         <Col span="6" :key="index">
                             <div :class="'pay-withdraw-card '+(item.isDefault?' pay-default ':'') " :key="index">
@@ -120,8 +120,21 @@
                     </template>
                 </Row>
             </div>
-            <div v-else>
-
+            <div v-else class="mt20" style="margin-top:60px;">
+                <div style="height:35px;line-height:35px;margin-top:10px;margin-bottom:25px;">
+                    <Icon type="ios-card" size="19" style="color:#2d8cf0;"/>
+                    <p style="display:inline-block;margin-left:5px;font-size:13px;font-weight:600;">
+                        收益提现
+                    </p>
+                </div>
+                <div style="text-align:center;vertical-align:middle;margin-top:30px;margin-bottom:30px;">
+                    <div>
+                        <XIcon type="unauth-out" size="63" style="color:#2d8cf0;"/>
+                    </div>
+                    <div style="margin-top:15px;">
+                        未绑定支付平台账号，无法进行体现，是否立即<span class="gocertify" @click="onRedirectToCertity">前往绑定</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -140,7 +153,7 @@ export default {
                 phone:"",
                 avatar:"",
             },
-            canWithdraw:true,
+            canWithdraw:false,
             pays:[
                 {
                     type:"alipay",
@@ -156,7 +169,18 @@ export default {
                 }
             ]
         }
+    },
+    created(){
+
+    },
+    methods:{
+        onRedirectToCertity(){
+            this.$router.push({
+                path:"/m/account/payaccount",
+            })
+        }
     }
+    
 
 }
 </script>
@@ -219,6 +243,13 @@ export default {
         width: 100%;
         text-align: right;
         font-size: 12px;
+    }
+    .gocertify{
+        color:rgb(251, 86, 10);
+        cursor: pointer;
+    }
+    .gocertify:hover{
+        color: #5cadff;
     }
 </style>
 <style>

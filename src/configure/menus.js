@@ -118,14 +118,19 @@ const report=[
         href:"/m/report",
     },
     {
-        id:"/m/report/details",
+        id:"/m/report/orders",
         title:"订单明细报表",
-        href:"/m/report/details",
+        href:"/m/report/orders",
     },
     {
         id:"/m/report/revenue",
         title:"收益报表",
         href:"/m/report/revenue",
+    },
+    {
+        id:"/m/report/subcommission",
+        title:"分佣收入报表",
+        href:"/m/report/subcommission",
     },
     {
         id:"/m/report/sever",
@@ -182,6 +187,11 @@ const account=[
         id:"/m/account/talent",
         title:"推广达人",
         children:[
+            {
+                id:"/m/account/talent/configure",
+                title:"推广达人",
+                href:"/m/account/talent/configure"
+            },
             {
                 id:"/m/account/talent/media",
                 title:"媒体账号",

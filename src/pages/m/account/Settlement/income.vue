@@ -53,7 +53,7 @@
         </div>
         <div class="content">
             <div class="filter">
-                <DatePicker :value="filter.daterange" type="daterange"  placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+                <DatePicker :value="filter.daterange" type="daterange" format="yyyy/MM/dd"   placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
             </div>
             <div class="list">
                 

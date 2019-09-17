@@ -102,14 +102,38 @@ var router=[
             path:"",
             name:"report/index",
             component:(resolve)=>{
-                return require(['../pages/m/promotion/index'],resolve);
+                return require(['../pages/m/report/index'],resolve);
+            }
+        },
+        //首页
+        {
+            path:"orders",
+            name:"report/orders",
+            component:(resolve)=>{
+                return require(['../pages/m/report/orders'],resolve);
+            }
+        },
+        //首页
+        {
+            path:"revenue",
+            name:"report/revenue",
+            component:(resolve)=>{
+                return require(['../pages/m/report/revenue'],resolve);
+            }
+        },
+        //分佣记录
+        {
+            path:"subcommission",
+            name:"report/subcommission",
+            component:(resolve)=>{
+                return require(['../pages/m/report/subcommission'],resolve);
             }
         },
     ]
   },
 
   
-  //供应商
+  //账号
   {
     path: '/m/account',
     name: '/m/account',
@@ -203,6 +227,14 @@ var router=[
           name:"account/talent/video",
           component:(resolve)=>{
               return require(['../pages/m/account/talent/media'],resolve);
+          }
+        },
+        //talent/configure
+        {
+          path:"talent/configure",
+          name:"account/talent/configure",
+          component:(resolve)=>{
+              return require(['../pages/m/account/talent/configure'],resolve);
           }
         },
     ]
