@@ -19,25 +19,28 @@
         </div>
     </div>
 
-    <div v-if="!certify" class="inf-card mt10">
+    <div v-if="certify" class="inf-card mt10">
         <div class="header" style="font-size:13px;">
             <h3>
                 我的推广码: 
-                <span v-if="unlockedFunctional" style="display:inline-block;margin-left:10px;"> 
+                <span v-if="current.state==2" style="display:inline-block;margin-left:10px;"> 
                     {{promotioncode}}
                 </span>
-                <span style="display:inline-block;margin-left:10px;font-weight:500;font-size:13px">
+                <span v-else-if="current.state!=2" style="display:inline-block;margin-left:10px;font-weight:500;font-size:13px">
+                    <span class="gocertify">审核中</span>
+                </span>
+                <span v-else style="display:inline-block;margin-left:10px;font-weight:500;font-size:13px">
                     未申请推广，<span class="gocertify" @click="onRedirectToPromotionCode">立即申请</span>分享推广赚钱
                 </span>
             </h3>
         </div>
-        <div v-if="unlockedFunctional" class="header" style="font-size:12px;margin-top:40px;">
+        <div v-if="current.state>=1" class="header" style="font-size:12px;margin-top:40px;">
             <p style="display:inline-block;margin-left:5px;font-size:13px;">
                 推广码申请历史
             </p>
-            <div style="margin-top:25px;">
-
-            </div>
+        </div>
+        <div v-if="current.state>=1"  style="margin-top:25px;padding: 0px 20px;">
+            <Table :columns="table.column" :data="history"></Table>
         </div>
     </div>
 </div>
@@ -45,6 +48,52 @@
 
 <script>
 import XIcon from '../../../../components/icon'
+const column=[
+    {
+        title:"申请姓名",
+        key:"name",
+    },
+    {
+        title:"状态",
+        key:"state",
+        render:(h,params)=>{
+            var html = params.row.state ==1 ?"等待审核"
+                :(params.row.state ==2 ?"正在使用"
+                    : (params.row.state == 9?"已过期":"")
+                )
+            ;
+            return h("div",{
+                domProps:{
+                    innerHTML:html,
+                },
+                style:{
+                    color:params.row.state == 2?"blue":(params.row.state == 9?"red":"")
+                }
+            })
+        }
+    },
+    {
+        title:"推广码",
+        key:"promotioncode",
+        render:(h,params)=>{
+            var html =params.row.promotioncode;
+            if(params.row.state == 1){
+                html = "正在审核";
+            }
+
+            return h("div",{
+                domProps:{
+                    innerHTML:html,
+                }
+            })
+        }
+    },
+    {
+        title:"申请时间",
+        key:"createdate",
+    }
+]
+
 export default {
     components:{XIcon},
     data(){
@@ -57,13 +106,37 @@ export default {
             promotioncode:"45654",
             unlockedFunctional:false,
             certify:false,
-            
+            history:[],
+            table:{
+                column:column,
+                
+            },
+            current:{
+                state:0,
+                promotioncode:"",
+
+            }
         }
     },
     created(){
-
+        var _this= this;
+        this.isCertify(function(){
+            _this.load();
+        });
     },
     methods:{
+        load(){
+            this.$http.get("/qn.lego.user.media.talent.promotioncode.apply").then(res=>{
+                this.current =res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+            this.$http.get("/qn.lego.user.media.talent.promotioncode.apply.history").then(res=>{
+                this.history =res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
         onRedirectToCertity(){
             this.$router.push({
                 path:"/m/account/talent/certifing",
@@ -73,6 +146,20 @@ export default {
             this.$router.push({
                 path:"/m/account/talent/applypromotion",
             })
+        },
+        isCertify(callback){
+            this.$http.get("/qn.user.property.is.certify").then(res=>{
+                console.log(res);
+                if(res.certify){
+                    this.certify = true;
+                }else{
+                    this.certify = false;
+                }
+                callback.call(this);
+            }).catch(ex=>{
+                this.unauthenication = true;
+                this.$Message.warning(ex.message);
+            });
         }
 
     }

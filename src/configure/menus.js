@@ -189,7 +189,7 @@ const account=[
         children:[
             {
                 id:"/m/account/talent/configure",
-                title:"推广达人",
+                title:"推广码",
                 href:"/m/account/talent/configure"
             },
             {

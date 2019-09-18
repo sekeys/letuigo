@@ -229,6 +229,14 @@ var router=[
               return require(['../pages/m/account/talent/media'],resolve);
           }
         },
+        //talent/video
+        {
+          path:"talent/applypromotion",
+          name:"account/talent/configure",
+          component:(resolve)=>{
+              return require(['../pages/m/account/talent/applypromotion'],resolve);
+          }
+        },
         //talent/configure
         {
           path:"talent/configure",

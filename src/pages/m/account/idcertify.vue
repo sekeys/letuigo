@@ -16,6 +16,25 @@
                     未认证信息，是否即可<span class="gocertify" @click="onRedirectToCertity">认证信息</span>
                 </div>
             </div>
+            <div v-else>
+                <div class="mt20 content " style="margin-top:60px;">
+                    <div class="inf-item">
+                        <p class="inf-label">真实姓名：</p>
+                        <p class="inf-value">
+                            {{certify.name}}
+                            <XIcon type="auth-out" size="16" style="color:#2d8cf0;"/>
+                        </p>
+                    </div>
+                    <div class="inf-item">
+                        <p class="inf-label">身份证号码：</p>
+                        <p class="inf-value">{{certify.number}}</p>
+                    </div>
+                    <div class="inf-item">
+                        <p class="inf-label">地址：</p>
+                        <p class="inf-value">{{certify.address}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -28,14 +47,33 @@ export default {
     data(){
         return {
             unauthenication:true,
-            showCertInformation:{
-
+            certify:{
+                name:null,
+                number:"",
+                address:"",
             }
         }
     },
+    created(){
+        this.load();
+    },
     methods:{
         load(){
+            this.$http.get("/qn.user.property.certication.get").then(res=>{
+                console.log(res);
+                if(!res.name){
+                    this.unauthenication = true;
+                }else{
+                    this.unauthenication = false;
+                }
+                this.certify.name = res.name;
+                this.certify.number = res.number;
+                this.certify.address =res.address;
 
+            }).catch(ex=>{
+                this.unauthenication = true;
+                this.$Message.warning(ex.message);
+            });
         },
         onRedirectToCertity(){
             this.$router.push({
