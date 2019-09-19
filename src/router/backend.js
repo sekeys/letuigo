@@ -181,6 +181,13 @@ var router=[
               return require(['../pages/m/account/payaccount'],resolve);
           }
         },
+        {
+          path:"payaccount/add",
+          name:"account/payaccount/add",
+          component:(resolve)=>{
+              return require(['../pages/m/account/payaccount.add'],resolve);
+          }
+        },
         //payaccount/add
         {
           path:"payaccount/add",

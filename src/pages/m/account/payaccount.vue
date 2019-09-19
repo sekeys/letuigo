@@ -14,23 +14,24 @@
                     <Col span="6" :key="index">
                         <div :class="'pay-withdraw-card '+(item.isDefault?' pay-default ':'') " :key="index">
                             <div class="title">
-                                <div v-if='item.type=="alipay"' class="icon">
+                                <div v-if='item.platform=="alipay"' class="icon">
                                     <XIcon type="alipay2" size="14" style="color:#2d8cf0;"/>
-                                </div>                                    <div v-else-if='item.type=="wechat"' class="icon">
+                                </div>                                    
+                                <div v-else-if='item.platform=="wechat"' class="icon">
                                     <XIcon type="wechat2" size="14" style="color:#2d8cf0;"/>
                                 </div>
                                 <div class="text">
-                                    {{item.type=="alipay"?"阿里支付宝": (item.type=="wechatpay"?"微信支付":item.type)}}
+                                    {{item.platform=="alipay"?"阿里支付宝": (item.platform=="wechatpay"?"微信支付":item.platform)}}
                                 </div>
                             </div>
                             <div class="account">
                                 <div class="text">
-                                    {{item.account}}
+                                    {{item.accountAlias}}
                                 </div>
                             </div>
                             <div class="footer">
                                 <div class="text">
-                                    {{item.name}}
+                                    {{item.title}}
                                 </div>
                             </div>
                         </div>
@@ -61,24 +62,25 @@ export default {
             },
             canWithdraw:true,
             pays:[
-                {
-                    type:"alipay",
-                    account:"Awwwxxxxa",
-                    "name":"微信支付",
-                    isDefault:true,
-                },
-                {
-                    type:"wechat",
-                    account:"Awwwxxxxa",
-                    "name":"微信支付",
-                    isDefault:false,
-                }
             ]
         }
     },
+    created(){
+        this.load();
+    },
     methods:{
         onRedirectToAddPayAccount(){
-            
+            this.$router.push({
+                path:'/m/account/payaccount/add'
+            });
+        },
+        load(){
+            this.$http.get("/qn.lego.user.capital.pay.account.get").then(res=>{
+                console.log(res);
+                this.pays = res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
         }
     }
 

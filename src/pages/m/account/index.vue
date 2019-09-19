@@ -44,7 +44,14 @@
                 我的受邀好友
             </h3>
         </div>
-        
+        <div style="text-align:center;vertical-align:middle;margin-top:30px;margin-bottom:30px;">
+            <div>
+                <IIcon type="unauth-out" size="63" style="color:#2d8cf0;"/>
+            </div>
+            <div style="margin-top:15px;">
+                暂未邀请任何好友，<span class="gocertify" @click="onRedirectToCertity">立刻前往邀请</span>
+            </div>
+        </div>
     </div>
     <div class="information-header mt15 mh340">
         <div class="item" style="font-size:13px;margin-top:0px;">
@@ -71,7 +78,32 @@ export default {
             invitecode:"543652",
             state:{
                 isCertifiedOne:false,
-            }
+            },
+            invters:[]
+        }
+    },
+    created(){
+        this.loadUseInfo();
+        this.loadInvitesMemberInfo();
+    },
+    methods:{
+        loadUseInfo(){
+            this.$http.get("/qn.lego.user.info.get").then(res=>{
+                console.log(res);
+                this.u = res;
+                this.invitecode = this.u.invitecode;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        loadInvitesMemberInfo(){
+            this.$http.get("/qn.lego.user.invitee.members").then(res=>{
+                console.log(res);
+                this.u = res;
+                this.inviters = this.u.invitecode;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
         }
     }
 }
@@ -121,6 +153,14 @@ export default {
 .list{
     
 }
+
+    .gocertify{
+        color:rgb(251, 86, 10);
+        cursor: pointer;
+    }
+    .gocertify:hover{
+        color: #5cadff;
+    }
 </style>
 
 <style>
