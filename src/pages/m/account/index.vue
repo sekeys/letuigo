@@ -28,13 +28,15 @@
     </div>
     <div class="information-header mt15 mh340">
         <div class="item" style="font-size:13px;margin-top:0px;">
-            <IIcon type="trend" size="17" />
+            <IIcon type="-trend" size="21" style="color:#2d8cf0;"/>
             <h3 style="display:inline-block;margin-left:5px;">
                 收益趋势图
             </h3>
         </div>
         <div class="content">
-            asdasdas
+            <Chart :options="chartOptions">
+
+            </Chart>
         </div>
     </div>
     <div class="information-header mt15 mh340">
@@ -49,27 +51,20 @@
                 <IIcon type="unauth-out" size="63" style="color:#2d8cf0;"/>
             </div>
             <div style="margin-top:15px;">
-                暂未邀请任何好友，<span class="gocertify" @click="onRedirectToCertity">立刻前往邀请</span>
+                暂未邀请任何好友，<span class="gocertify" @click="onRedirectToInviteMember">立刻前往邀请</span>
             </div>
         </div>
     </div>
-    <div class="information-header mt15 mh340">
-        <div class="item" style="font-size:13px;margin-top:0px;">
-            <IIcon type="ios-pulse-outline" size="18" />
-            <h3 style="display:inline-block;margin-left:5px;">
-                收益趋势图
-            </h3>
-        </div>
-        
-    </div>
+    
     
 </div>
 </template>
 
 <script>
+import {Chart} from 'highcharts-vue'
 import IIcon from '../../../components/icon'
 export default {
-    components:{IIcon},
+    components:{IIcon,Chart},
     data(){
         return {
             u:{
@@ -79,12 +74,23 @@ export default {
             state:{
                 isCertifiedOne:false,
             },
-            invters:[]
+            invters:[],
+            uallRevenue:[],
+            chartOptions:{
+                chart: {
+                    type: "spline"
+                },
+                title: {
+                    text: ""
+                },
+
+            }
         }
     },
     created(){
         this.loadUseInfo();
         this.loadInvitesMemberInfo();
+        this.loadRevenueTrending();
     },
     methods:{
         loadUseInfo(){
@@ -104,6 +110,17 @@ export default {
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });
+        },
+        loadRevenueTrending(){
+            this.$http.get("/qn.lego.revenue.promotion.uall.trending").then(res=>{
+                this.uallRevenue = res;
+               
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        onRedirectToInviteMember(){
+
         }
     }
 }
