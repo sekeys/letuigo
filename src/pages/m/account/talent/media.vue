@@ -106,13 +106,29 @@ export default {
         }
     },
     created(){
-
+        this.isCertify(function(){
+            
+        })
     },
     methods:{
         onRedirectToCertity(){
             this.$router.push({
                 path:"/m/account/talent/certify",
             })
+        },
+        isCertify(callback){
+            this.$http.get("/qn.user.property.is.certify").then(res=>{
+                console.log(res);
+                if(res.certify){
+                    this.unlockedFunctional = true;
+                }else{
+                    this.unlockedFunctional = false;
+                }
+                callback.call(this);
+            }).catch(ex=>{
+                this.unauthenication = true;
+                this.$Message.warning(ex.message);
+            });
         }
 
     }

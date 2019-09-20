@@ -181,6 +181,13 @@ var router=[
               return require(['../pages/m/account/payaccount'],resolve);
           }
         },
+        {
+          path:"payaccount/add",
+          name:"account/payaccount/add",
+          component:(resolve)=>{
+              return require(['../pages/m/account/payaccount.add'],resolve);
+          }
+        },
         //payaccount/add
         {
           path:"payaccount/add",
@@ -227,6 +234,14 @@ var router=[
           name:"account/talent/video",
           component:(resolve)=>{
               return require(['../pages/m/account/talent/media'],resolve);
+          }
+        },
+        //talent/video
+        {
+          path:"talent/applypromotion",
+          name:"account/talent/configure",
+          component:(resolve)=>{
+              return require(['../pages/m/account/talent/applypromotion'],resolve);
           }
         },
         //talent/configure

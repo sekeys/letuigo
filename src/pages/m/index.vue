@@ -104,4 +104,47 @@ export default {
 .mh340{
     min-height: 340px;
 }
+.inf-card .inf-area{
+    padding:10px 20px;
+}
+.inf-card .inf-area .title{
+font-size:12px;font-weight:600;margin-bottom:10px;
+}
+.inf-card .inf-area .area-content{
+    margin-top:15px;width:460px;
+}
+.inf-card .inf-area .area-content-100{
+    margin-top:15px;width:100%;
+}
+.inf-card .inf-area .annotation{
+    
+}
+.inf-center{
+    text-align: center;
+}
+.inf-func{
+    margin-top: 45px;
+}
+
+    .inf-label{
+        width:74px;
+        text-align:right;
+        font-size:12px;
+        display: inline-block;
+        color:#999999;
+    }
+    .inf-value{
+        text-align:left;
+        font-size:13px;
+        padding-left: 5px;
+        display: inline-block;
+    }
+    .inf-item{
+        margin:5px 0;
+    }
+    .inf-item-lh25{
+        margin:10px 0;
+        height: 25px;
+        line-height: 25px;
+    }
 </style>

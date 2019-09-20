@@ -17,7 +17,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530
+                                        {{revenue.settlement}}
                                     </span>
                                 </p>
                             </div>
@@ -34,7 +34,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530.00
+                                        {{revenue.amount}}
                                     </span>
                                 </p>
                             </div>
@@ -74,17 +74,40 @@ export default {
         now.setDate(now.getDate() - 7);
         start =new Date(now);
         return {
-            u:{
-                nick:"Sekeys",
-                invitecode:"",
-                phone:"",
-                avatar:"",
+            revenue:{
+                amount:0,
+                settlement:0,
+                anticipated:0,
             },
+            revenues:[],
             filter:{
-                start:start,
-                end:end,
                 daterange:[start,end]
             },
+        }
+    },
+    created(){
+        this.loadLatestRevenue();
+        this.loadTrend();
+    },
+    methods:{
+        loadLatestRevenue(){
+            this.$http.get("/qn.lego.revenue.promotion.u.latest.7").then(res=>{
+                console.log(res);
+                this.revenue = res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        loadTrend(){
+            this.$get("/qn.lego.revenue.promotion.uall.trending",{
+                start:this.filter.daterange[0],
+                end:this.filter.daterange[1],
+            }).then(res=>{
+                console.log(res);
+                this.revenues = res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
         }
     }
 

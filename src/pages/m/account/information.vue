@@ -8,9 +8,9 @@
             </p>
         </div>
         <div class="mt20 content " style="margin-top:60px;">
-            <div class="avatar">
+            <!--<div class="avatar">
                 <p class="inf-label">头像：</p>
-            </div>
+            </div>-->
             <div class="inf-item">
                 <p class="inf-label">昵称：</p>
                 <p class="inf-value">{{u.nick}}</p>
@@ -20,12 +20,11 @@
                 <p class="inf-value">{{u.phone}}</p>
             </div>
 
-            
             <div class="inf-item">
                 <p class="inf-label">邀请码：</p>
                 <p class="inf-value">{{u.invitecode}}</p>
                 <p class="inf-value" style="margin-left:20px;">
-                    <Tag  color="volcano">邀请好友</Tag>
+                    <Tag  color="volcano" @click.native="onInvitingFriend">邀请好友</Tag>
                 </p>
                 
             </div>
@@ -48,7 +47,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530
+                                        {{revenue.anticipated}}
                                     </span>
                                 </p>
                             </div>
@@ -61,7 +60,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530.00
+                                        {{revenue.settlement}}
                                     </span>
                                 </p>
                             </div>
@@ -74,7 +73,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530.00
+                                        {{revenue.amount}}
                                     </span>
                                 </p>
                             </div>
@@ -93,26 +92,26 @@
                 <Row v-if="pays&&pays.length" :gutter="32">
                     <template v-for="(item,index) in pays">
                         <Col span="6" :key="index">
-                            <div :class="'pay-withdraw-card '+(item.isDefault?' pay-default ':'') " :key="index">
+                            <div :class="'pay-withdraw-card '+(item.isdefault?' pay-default ':'') " :key="index">
                                 <div class="title">
-                                    <div v-if='item.type=="alipay"' class="icon">
+                                    <div v-if='item.platform=="alipay"' class="icon">
                                         <XIcon type="alipay2" size="14" style="color:#2d8cf0;"/>
                                     </div>
-                                    <div v-else-if='item.type=="wechat"' class="icon">
+                                    <div v-else-if='item.platform=="wechat"' class="icon">
                                         <XIcon type="wechat2" size="14" style="color:#2d8cf0;"/>
                                     </div>
                                     <div class="text">
-                                        {{item.type=="alipay"?"阿里支付宝": (item.type=="wechatpay"?"微信支付":item.type)}}
+                                        {{item.platform=="alipay"?"阿里支付宝": (item.platform=="wechatpay"?"微信支付":item.platform)}}
                                     </div>
                                 </div>
                                 <div class="account">
                                     <div class="text">
-                                        {{item.account}}
+                                        {{item.accountAlias}}
                                     </div>
                                 </div>
                                 <div class="footer">
                                     <div class="text">
-                                        {{item.name}}
+                                        {{item.title}}
                                     </div>
                                 </div>
                             </div>
@@ -153,6 +152,11 @@ export default {
                 phone:"",
                 avatar:"",
             },
+            revenue:{
+                amount:0,
+                settlement:0,
+                anticipated:0,
+            },
             canWithdraw:false,
             pays:[
                 {
@@ -161,24 +165,59 @@ export default {
                     "name":"微信支付",
                     isDefault:true,
                 },
-                {
-                    type:"wechat",
-                    account:"Awwwxxxxa",
-                    "name":"微信支付",
-                    isDefault:false,
-                }
             ]
         }
     },
     created(){
-
+        this.loadUserInfo();
+        this.loadLatestRevenue();
+        this.load4Pay();
     },
     methods:{
         onRedirectToCertity(){
             this.$router.push({
                 path:"/m/account/payaccount",
             })
+        },
+        loadUserInfo(){
+            this.$http.get("/qn.lego.user.info.get").then(res=>{
+                console.log(res);
+                this.u = res;
+
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        onInvitingFriend(){
+            this.$router.push({
+                path:"/inviting/friends",
+                query:{
+                    reback:this.$router.fullpath
+                }
+            });
+        },
+        loadLatestRevenue(){
+            this.$http.get("/qn.lego.revenue.promotion.u.latest.7").then(res=>{
+                console.log(res);
+                this.revenue = res;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        load4Pay(){
+            this.$http.get("/qn.lego.user.capital.pay.account.get.4").then(res=>{
+                console.log(res);
+                this.pays = res;
+                if(res &&res.length){
+                    this.canWithdraw=true;
+                }else{
+                    this.canWithdraw=false;
+                }
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
         }
+        
     }
     
 

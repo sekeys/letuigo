@@ -2,9 +2,9 @@
 <div>
     <div class="inf-card mt10">
         <div class="header" style="font-size:13px;margin-top:0px;">
-            <XIcon type="money-cashout" size="18" style="color:#2d8cf0;font-weight:600;"/>
+            <XIcon type="money-income" size="18" style="color:#2d8cf0;font-weight:600;"/>
             <p style="display:inline-block;margin-left:5px;font-size:13px;font-weight:600;">
-                提现记录
+                收入记录
             </p>
         </div>
         <div class="content">
@@ -13,11 +13,11 @@
                     <Col span="8">
                         <div style="height:90px;width:100%;text-align:center;display:inline-block;">
                             <div style="margin-top:15px;">
-                                <p style="height: 35px;line-height: 35px;font-size: 16px;">近一笔提现</p>
+                                <p style="height: 35px;line-height: 35px;font-size: 16px;">近7天收益</p>
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530
+                                        {{revenue.settlement}}
                                     </span>
                                 </p>
                             </div>
@@ -34,7 +34,7 @@
                                 <p style="height: 35px;line-height: 35px;font-size: 16px;font-weight: 700;margin-top:5px;">
                                     <XIcon type="gold" size="21" style="color:rgb(244, 194, 34);"/>
                                     <span style="color:#ff464e;margin-left:3px;">
-                                        12530.00
+                                        {{revenue.amount}}
                                     </span>
                                 </p>
                             </div>
@@ -48,12 +48,12 @@
         <div class="header" style="font-size:13px;margin-top:0px;">
             <XIcon type="desktop-trend" size="17"  style="color:#2d8cf0;font-weight:500;"/>
             <h3 style="display:inline-block;margin-left:5px;">
-                提现趋势图
+                收益趋势图
             </h3>
         </div>
         <div class="content">
             <div class="filter">
-                <DatePicker :value="filter.daterange" type="daterange" format="yyyy/MM"  placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+                <DatePicker :value="filter.daterange" type="daterange" format="yyyy/MM/dd"   placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
             </div>
             <div class="list">
                 
@@ -73,37 +73,38 @@ export default {
         end =new Date(now);
         now.setDate(now.getDate() - 7);
         start =new Date(now);
-            
         return {
-            latest:{
-
+            revenue:{
+                amount:0,
+                settlement:0,
+                anticipated:0,
             },
-            history:[],
+            revenues:[],
             filter:{
                 daterange:[start,end]
             },
         }
     },
     created(){
-        this.loadLatestWithdraw();
+        this.loadLatestRevenue();
         this.loadTrend();
     },
     methods:{
         loadLatestRevenue(){
-            this.$http.get("/qn.lego.revenue.promotion.u.latest.7").then(res=>{
+            this.$http.get("/qn.lego.revenue.sub.promotion.u.latest.7").then(res=>{
                 console.log(res);
-                this.latest = res;
+                this.revenue = res;
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });
         },
         loadTrend(){
-            this.$get("/qn.lego.revenue.promotion.uall.trending",{
+            this.$get("/qn.lego.revenue.sub.promotion.u.trending",{
                 start:this.filter.daterange[0],
                 end:this.filter.daterange[1],
             }).then(res=>{
                 console.log(res);
-                this.history = res;
+                this.revenues = res;
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });

@@ -4,34 +4,31 @@
         <div class="header" style="font-size:13px;margin-top:0px;">
             <XIcon type="idcard" size="23" style="color:#2d8cf0;"/>
             <p style="display:inline-block;margin-left:5px;font-size:13px;font-weight:600;">
-                身份认证
+                添加提现账号
             </p>
         </div>
-        <div class="mt20 content " style="margin-top:60px;">
-            <div v-if="unauthenication" style="text-align:center;vertical-align:middle;margin-top:30px;margin-bottom:30px;">
-                <div>
-                    <XIcon type="unauth-out" size="63" style="color:#2d8cf0;"/>
-                </div>
-                <div style="margin-top:15px;">
-                    未认证信息，是否即可<span class="gocertify" @click="onRedirectToCertity">认证信息</span>
-                </div>
-            </div>
-            <div v-else>
-                <div class="mt20 content " style="margin-top:60px;">
-                    <div class="inf-item">
-                        <p class="inf-label">真实姓名：</p>
-                        <p class="inf-value">
-                            {{certify.name}}
-                            <XIcon type="auth-out" size="16" style="color:#2d8cf0;"/>
-                        </p>
-                    </div>
-                    <div class="inf-item">
-                        <p class="inf-label">身份证号码：</p>
-                        <p class="inf-value">{{certify.number}}</p>
-                    </div>
-                    <div class="inf-item">
-                        <p class="inf-label">地址：</p>
-                        <p class="inf-value">{{certify.address}}</p>
+        <div class="mt20 content " style="margin-top:30px;">
+            <div class="inf-area" style="">
+                <div class="area-content" style="">
+                    <Form  :label-width="80">
+                        <FormItem label="名称">
+                            <Input v-model="pay.title" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="支付宝账号">
+                            <Input v-model="pay.account" placeholder=""></Input>
+                        </FormItem>
+                        <FormItem label="设置默认">
+                            <RadioGroup v-model="pay.default">
+                                <Radio :label="true">默认账号</Radio>
+                                <Radio :label="false">否</Radio>
+                            </RadioGroup>
+                        </FormItem>
+                    </Form>
+                    <div class="inf-func " style="margin-left:35px;">
+                        <div class="two">
+                            <Button type="primary" :loading="state.post" @click="onSubmitAddPayAccount">提交认证</Button>
+                            <Button style="margin-left: 8px" :disabled="state.post" @click="onBrowserBack">取消返回</Button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,39 +44,36 @@ export default {
     data(){
         return {
             unauthenication:true,
-            certify:{
-                name:null,
-                number:"",
-                address:"",
+            pay:{
+                title:"",
+                account:"",
+                platform:"alipay",
+                default:false,
+            },
+            state:{
+                post:false
             }
         }
     },
-    created(){
-        this.load();
-    },
     methods:{
-        load(){
-            this.$http.get("/qn.user.property.certication.get").then(res=>{
-                console.log(res);
-                if(!res.name){
-                    this.unauthenication = true;
-                }else{
-                    this.unauthenication = false;
-                }
-                this.certify.name = res.name;
-                this.certify.number = res.number;
-                this.certify.address =res.address;
-
+        onBrowserBack(){
+            this.$router.back();
+        },
+        onSubmitAddPayAccount(){
+            if(!this.pay.title){
+                this.$Message.warning("未设置提现账号名称");
+            }
+            if(!this.pay.account){
+                this.$Message.warning("未设置提现账号");
+            }
+            this.pay.alias =this.pay.account;
+            this.$http.post("/qn.lego.user.capital.pay.account.create",this.pay).then(res=>{
+                this.onBrowserBack();
             }).catch(ex=>{
-                this.unauthenication = true;
+                this.sending=false;
                 this.$Message.warning(ex.message);
             });
         },
-        onRedirectToCertity(){
-            this.$router.push({
-                path:"/m/account/certifing",
-            })
-        }
     }
 
 }
@@ -107,7 +101,6 @@ export default {
         width: 100%;
         border: 1px solid #bdc6cf;
         cursor: pointer;
-        padding:16px ;
         position: relative;
     }
     .pay-withdraw-card:hover{
@@ -155,5 +148,8 @@ export default {
 <style>
 .bck-app-content{
     background: transparent;
+}
+.ivu-upload-select{
+    display: unset;
 }
 </style>
