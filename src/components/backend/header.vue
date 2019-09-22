@@ -153,7 +153,7 @@ export default {
      background: white;
      height: 70px;
      line-height: 70px;
-     
+     z-index:10;
      vertical-align: middle;
      font-size: 12px;
      box-shadow:0 2px 4px 0 rgba(0,0,0,.1);
