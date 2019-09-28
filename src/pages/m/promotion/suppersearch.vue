@@ -205,13 +205,13 @@
                 </Card>
             </template>
             
+            <Spin fix v-if="state.loading"></Spin>
+        </div>
             <div style="text-align:right;margin-top:10px;margin-right:20px;">
                 <Page :total="totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" size="small" 
                     show-elevator show-sizer show-total
                     @on-change="onPageChange" @on-page-size-change="onPageSizeChange"/>
             </div>
-            <Spin fix v-if="state.loading"></Spin>
-        </div>
     </div>
 </div>
 </template>

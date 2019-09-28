@@ -34,6 +34,13 @@ var router=[
           }
         },
         {
+          path:"collect/add",
+          name:"/m/promotion/collect/add",
+          component:(resolve)=>{
+              return require(['../pages/m/promotion/addcollection'],resolve);
+          }
+        },
+        {
           path:"/m/promotion/subscribe",
           name:"/m/promotion/subscribe",
           component:(resolve)=>{
