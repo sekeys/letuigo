@@ -1,7 +1,7 @@
 <template>
 <Card class="card product-card">
     <div class="card-img">
-        <img :src="product.product.PictUrl" width="250" height="250"></img>
+        <img :src="product.product.PictUrl" width="220" height="220"></img>
     </div>
     <div class="title">
         <span class="icon">
@@ -152,12 +152,12 @@ export default {
     padding: 0px;
 }
 .card{
-    width: 250px;
+    width: 220;
     display: inline-block;
 }
 .card-img{
-    width:250px;
-    height: 250px;
+    width:220;
+    height: 220;
     margin:0px;
     padding:0px;
     border:0px;
@@ -165,14 +165,14 @@ export default {
 .title{
     height:30px;
     line-height: 30px;
-    width: 240px;
+    width: 210px;
     text-align:left;
     padding-left:5px;
     padding-right: 5px;
 }
 .title .content{
     font-size: 14px;
-    width: 206px;
+    width: 176px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -104,12 +104,24 @@ export default {
 
     .body{
         margin-top: 10px;
-        width:1084px;
+        width:1184px;
         margin-left: auto;
         margin-right:auto;
         text-align: left;
     }
     .product-item{
-        margin:10px;
+        margin:9px;
+    }
+    .product-item:first-child{
+        margin-left:0px;
+    }
+    .product-item:nth-child(5n+1){
+        margin-left:0px;
+    }
+    .product-item:nth-child(5n){
+        margin-right:0px;
+    }
+    .product-item:last-child{
+        margin-right:0px;
     }
 </style>

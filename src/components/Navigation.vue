@@ -73,7 +73,7 @@ export default {
 
     .body{
         margin-top: 10px;
-        width:1024px;
+        width:1190px;
         margin-left: auto;
         margin-right:auto;
         text-align: left;
