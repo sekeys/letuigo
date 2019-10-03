@@ -7,7 +7,7 @@
         <span class="icon">
             <Avatar shape="square"  src="http://gw.alicdn.com/tfs/TB13jKla21G3KVjSZFkXXaK4XXa-172-172.png"  style="height:18px;width:18px;"  />
         </span>
-        <span class="content">
+        <span class="content" @click="onTitleClick">
             {{this.product.product.Title}}
         </span>
     </div>
@@ -84,13 +84,16 @@ export default {
     methods:{
         onRedirectToBuyProduct(){
             //CouponShareUrl,click_url
-            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.ClickUrl,"_blank")
+            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.Url,"_blank")
         },
         onRedirectToLogin(){
             this.$redirectToLogin();
         },
         onCancelRedirectToLogin(){
             this.state.showLoginWarning = false;
+        },
+        onTitleClick(){
+            window.open(this.product.product.Url,"_blank");
         },
         onRedirectToShare(){
             if(!this.hasLogin){
@@ -198,7 +201,7 @@ export default {
     cursor: pointer;
 }
 .func-item:hover{
-    color: #ff464e;
-    background: rgba(32,32,64,.08);
+    color: white;
+    background: #ff464e;
 }
 </style>

@@ -31,6 +31,12 @@ Axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 Axios.interceptors.response.use(res=>{
+    if(res.status >200){
+      return Promise.reject({
+        errorcode:1,
+        message:"服务错误"
+      });
+    }
     var data=res.data;
     if(!data){
       return data;

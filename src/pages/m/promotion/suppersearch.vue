@@ -204,7 +204,7 @@
                     </div>
                 </Card>
             </template>
-            
+            <div style="clear:both;"></div>
             <Spin fix v-if="state.loading"></Spin>
         </div>
             <div style="text-align:right;margin-top:10px;margin-right:20px;">

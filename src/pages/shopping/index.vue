@@ -4,11 +4,24 @@
 
     </div>
     <div class="products">
+        <div style="text-align:right;margin-top:10px;margin-right:20px;">
+            <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
+                simple
+                @on-change="onPageChange" />
+        </div>
+        <div>
         <template v-for="(item,index) in data">
             <ProductCard class="product-item" :product="item" :key="index">
 
             </ProductCard>
         </template>
+        <div style="clear:both;"></div>
+        <div style="text-align:center;margin-top:10px;margin-right:20px;">
+            <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
+                simple
+                @on-change="onPageChange" />
+        </div>
+        </div>
     </div>
 </div>
 </template>
@@ -49,8 +62,7 @@ export default {
                 pageSize:100,
                 pageNo:1
             },
-            data:{
-            },
+            data:[],
             page:{
                 totalResult:0,
             }
@@ -84,7 +96,7 @@ export default {
                     return ;
                 }
                 this.data=data.list;
-                this.totalResult = data.totalResults;
+                this.page.totalResult = data.totalResult;
             }).catch(ex=>{
                 this.state.loading=false;
                 this.$Message.warning(ex.message);
@@ -96,6 +108,14 @@ export default {
             }
             return v;
         },
+        onPageChange(index){
+            this.searchOpts.pageNo = index;
+            this.loadingProduct();
+        },
+        onResetPageLoading(){
+            this.searchOpts.pageNo = 1;
+            this.loadingProduct();
+        }
     }
 }
 </script>

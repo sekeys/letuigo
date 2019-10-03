@@ -12,7 +12,12 @@
     </div>
     <div @click="onRedirectToPage('/shopping')" :class="`layout-line navigation-item ${getActiveClass('/shopping')}`">
         <div>
-            购物
+            精选商品
+        </div>
+    </div>
+    <div @click="onRedirectToPage('/promotion')" :class="`layout-line navigation-item ${getActiveClass('/promotion')}`">
+        <div>
+            达人带货
         </div>
     </div>
     <div @click="onRedirectToPage('/hotpush')" :class="`layout-line navigation-item ${getActiveClass('/hotpush')}`">
@@ -20,19 +25,19 @@
             优惠热推
         </div>
     </div>
-    <div @click="onRedirectToPage('/miaosha')" :class="`layout-line navigation-item ${getActiveClass('/miaosha')}`">
+    <div @click="onRedirectToPage('/flash')" :class="`layout-line navigation-item ${getActiveClass('/flash')}`">
         <div>
             限时秒杀
         </div>
     </div>
-    <div @click="onRedirectToPage('/gold')" :class="`layout-line navigation-item ${getActiveClass('/gold')}`">
+    <!--<div @click="onRedirectToPage('/gold')" :class="`layout-line navigation-item ${getActiveClass('/gold')}`">
         <div>
             金币抢购
         </div>
-    </div>
-    <div @click="onRedirectToPage('/sharemoney')" :class="`layout-line navigation-item ${getActiveClass('/sharemoney')}`">
-        <div>
-            分享赚钱
+    </div>-->
+    <div @click="onRedirectToPage('/howto/howtomakemoney')" :class="`layout-line navigation-item ${getActiveClass('/howto')}`">
+        <div >
+            如何去分享赚钱
         </div>
     </div>
 </div>
@@ -47,7 +52,11 @@ export default {
     },
     methods:{
         getActiveClass(path){
+
             if(this.activeName == path){
+                return "active";
+            }
+            else if(this.activeName && this.activeName.startsWith(path)){
                 return "active";
             }
             return "";
