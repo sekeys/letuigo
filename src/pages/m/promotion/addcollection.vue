@@ -26,7 +26,7 @@
                     </Form>
                     <div class="inf-func " style="margin-left:35px;">
                         <div class="two">
-                            <Button type="primary" :loading="state.post" @click="onSubmitAdd">提交认证</Button>
+                            <Button type="primary" :loading="state.post" @click="onSubmitAdd">确认提交</Button>
                             <Button style="margin-left: 8px" :disabled="state.post" @click="onBrowserBack">取消返回</Button>
                         </div>
                     </div>

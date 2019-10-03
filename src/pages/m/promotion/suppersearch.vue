@@ -184,7 +184,7 @@
                                 <span class="icon" style="background-color:#fe4800;color:white;width:25px;display:inline-block;text-align:center;line-height:25px;">券</span>
                                 <span style="line-height:25px;color:#fe4800;margin-right:5px;" class="money">{{item.CouponAmount}}元</span>
                             </span>
-                            <span v-else class="tag-coupon fl" style="display:inline-block;font-size:12px;height:25px;line-height:25px;">
+                            <span v-else class="tag-coupon fl" style="display:inline-block;font-size:12px;height:26px;line-height:26px;">
 
                             </span>
                         </div>
@@ -193,6 +193,7 @@
                         </div>
                         <div style="clear:both;"></div>
                     </div>
+                    <div style="clear:both;"></div>
                     <div style="margin-top:10px;margin-bottom:10px;">
                         <div class="selled-num">
                             月销量&nbsp;&nbsp;{{item.TkTotalSales}}
