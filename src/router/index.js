@@ -58,6 +58,21 @@ var router=[
       return require(['../pages/hotpush/index'],resolve);
     }
   },
+  //优惠热推
+  {
+    path: '/flash',
+    name: '/flash',
+    component: (resolve)=>{
+      return require(['../pages/flash/index'],resolve);
+    }
+  },
+  {
+    path: '/howto/howtomakemoney',
+    name: '/howto/howtomakemoney',
+    component: (resolve)=>{
+      return require(['../pages/instruction/howtomakemoney'],resolve);
+    }
+  },
   
 ]
 

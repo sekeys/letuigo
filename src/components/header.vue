@@ -114,7 +114,7 @@ export default {
 .h35px{
     height: 35px;
     line-height: 35px;
-    width:1024px;
+    width:1190px;
     margin-left: auto;
     margin-right:auto;
 }

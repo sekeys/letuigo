@@ -23,21 +23,28 @@ var router=[
           path:"supersearch",
           name:"promotion/supersearch",
           component:(resolve)=>{
-              return require(['../pages/m/promotion/index'],resolve);
+              return require(['../pages/m/promotion/suppersearch'],resolve);
           }
         },
         {
           path:"collect",
           name:"/m/promotion/collect",
           component:(resolve)=>{
-              return require(['../pages/m/promotion/index'],resolve);
+              return require(['../pages/m/promotion/collection'],resolve);
+          }
+        },
+        {
+          path:"collect/add",
+          name:"/m/promotion/collect/add",
+          component:(resolve)=>{
+              return require(['../pages/m/promotion/addcollection'],resolve);
           }
         },
         {
           path:"/m/promotion/subscribe",
           name:"/m/promotion/subscribe",
           component:(resolve)=>{
-              return require(['../pages/m/promotion/index'],resolve);
+              return require(['../pages/m/promotion/subcribe'],resolve);
           }
         },
     ]
@@ -89,7 +96,7 @@ var router=[
     ]
   },
   
-  //供应商
+  //报表
   {
     path: '/m/report',
     name: '/m/report',

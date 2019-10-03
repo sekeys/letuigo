@@ -31,6 +31,12 @@ Axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
 });
 Axios.interceptors.response.use(res=>{
+    if(res.status >200){
+      return Promise.reject({
+        errorcode:1,
+        message:"服务错误"
+      });
+    }
     var data=res.data;
     if(!data){
       return data;
@@ -74,7 +80,9 @@ Vue.prototype.$hasLogin = !!Configure.token();
  * 路由权限管理
  */
 router.beforeEach((to, from, next) => {
+  iview.LoadingBar.start();
   if(!to.matched){
+    
     next({
       path:"/error/404",
       query:"",
@@ -86,7 +94,9 @@ router.beforeEach((to, from, next) => {
   }
 
 })
-
+router.afterEach(route => {
+  iview.LoadingBar.finish();
+});
 
 /* eslint-disable no-new */
 new Vue({

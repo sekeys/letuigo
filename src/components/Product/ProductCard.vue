@@ -1,13 +1,13 @@
 <template>
 <Card class="card product-card">
     <div class="card-img">
-        <img :src="product.product.PictUrl" width="250" height="250"></img>
+        <img :src="product.product.PictUrl" width="220" height="220"></img>
     </div>
     <div class="title">
         <span class="icon">
             <Avatar shape="square"  src="http://gw.alicdn.com/tfs/TB13jKla21G3KVjSZFkXXaK4XXa-172-172.png"  style="height:18px;width:18px;"  />
         </span>
-        <span class="content">
+        <span class="content" @click="onTitleClick">
             {{this.product.product.Title}}
         </span>
     </div>
@@ -84,13 +84,16 @@ export default {
     methods:{
         onRedirectToBuyProduct(){
             //CouponShareUrl,click_url
-            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.ClickUrl,"_blank")
+            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.Url,"_blank")
         },
         onRedirectToLogin(){
             this.$redirectToLogin();
         },
         onCancelRedirectToLogin(){
             this.state.showLoginWarning = false;
+        },
+        onTitleClick(){
+            window.open(this.product.product.Url,"_blank");
         },
         onRedirectToShare(){
             if(!this.hasLogin){
@@ -152,12 +155,12 @@ export default {
     padding: 0px;
 }
 .card{
-    width: 250px;
+    width: 220;
     display: inline-block;
 }
 .card-img{
-    width:250px;
-    height: 250px;
+    width:220;
+    height: 220;
     margin:0px;
     padding:0px;
     border:0px;
@@ -165,14 +168,14 @@ export default {
 .title{
     height:30px;
     line-height: 30px;
-    width: 240px;
+    width: 210px;
     text-align:left;
     padding-left:5px;
     padding-right: 5px;
 }
 .title .content{
     font-size: 14px;
-    width: 206px;
+    width: 176px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -198,7 +201,7 @@ export default {
     cursor: pointer;
 }
 .func-item:hover{
-    color: #ff464e;
-    background: rgba(32,32,64,.08);
+    color: white;
+    background: #ff464e;
 }
 </style>
