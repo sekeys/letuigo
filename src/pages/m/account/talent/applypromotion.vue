@@ -11,8 +11,9 @@
             <div class="inf-steps" style="margin-left:auto;margin-right:auto;">
                 <Steps :current="step">
                     <Step title="阅读协议" :content="step==0?'阅读并同意推广协议':''"></Step>
-                    <Step title="填写资料" :content="step==1?'填写申请资料':''"></Step>
-                    <Step title="待审核" :content="step==2?'等待系统审核':''"></Step>
+                    <Step title="填写个人资料" :content="step==1?'填写个人资料':''"></Step>
+                    <Step title="填写运营资料" :content="step==2?'填写运营资料':''"></Step>
+                    <Step title="待审核" :content="step==3?'等待系统审核':''"></Step>
                     <Step title="开始推广" :content="step==3?'推广赚钱':''"></Step>
                 </Steps>
             </div>
@@ -45,13 +46,22 @@
                             <FormItem label="QQ：">
                                 <Input v-model="applyinfo.qq" placeholder=""></Input>
                             </FormItem>
+                            <FormItem label="运营场景：">
+                                <Select v-model="applyinfo.scene" placeholder="">
+                                    <Option value="微信群">微信群</Option>
+                                    <Option value="QQ群">QQ群</Option>
+                                    <Option value="自媒体">自媒体</Option>
+                                    <Option value="抖音">抖音</Option>
+                                    <Option value="3">其他</Option>
+                                </Select>
+                            </FormItem>
                             <FormItem label="运营：">
                                 <Input v-model="applyinfo.operation" type="textarea" :rows="3" placeholder=""></Input>
                             </FormItem>
                         </Form>
                         <div class="inf-func inf-center" >
                             <div class="one">
-                                <Button type="primary" @click="onApplyTo">提交申请</Button>
+                                <Button type="primary" @click="onApplyTo">确认提交</Button>
                             </div>
                         </div>
                     </div>
@@ -89,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div v-else-if="step==3">
                 <div class="inf-area" style="margin-top:60px;">
                     <h3 style="font-size:16px;">
@@ -140,6 +150,7 @@ export default {
                 name:"",
                 wechat:"",
                 qq:"",
+                scene:"",
                 promotioncode:"12312",
                 operation:"",
             }
@@ -167,10 +178,23 @@ export default {
             });
         },
         onApplyTo(){
+            this.onRedirectToTaobaoOauth();
+            return;
             this.$http.post("/qn.lego.user.media.talent.promotioncode.apply.create",this.applyinfo).then(res=>{
                 this.step =2;
-                this.applyinfo.state=1;
-                this.onState();
+                //this.applyinfo.state=1;
+                this.onRedirectToTaobaoOauth();
+                //this.onState();
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        onRedirectToTaobaoOauth(){
+            this.$http.get("/qn.lego.taobao.oauth.url?state=r.apply.letuigo").then(res=>{
+                this.step =2;
+                //this.applyinfo.state=1;
+                window.location.href = res;
+                //this.onState();
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });

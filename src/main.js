@@ -92,7 +92,6 @@ router.beforeEach((to, from, next) => {
   }else{
     next();
   }
-
 })
 router.afterEach(route => {
   iview.LoadingBar.finish();

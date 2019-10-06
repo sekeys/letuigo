@@ -4,7 +4,7 @@
 
     </div>
     <div class="products">
-        <div style="text-align:right;margin-top:10px;margin-right:20px;">
+        <div v-if="page.totalResult>50" style="text-align:right;margin-top:10px;margin-right:20px;">
             <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
                 simple
                 @on-change="onPageChange" />
@@ -16,7 +16,7 @@
             </ProductCard>
         </template>
         <div style="clear:both;"></div>
-        <div style="text-align:center;margin-top:10px;margin-right:20px;">
+        <div  v-if="page.totalResult>50" style="text-align:center;margin-top:10px;margin-right:20px;">
             <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
                 simple
                 @on-change="onPageChange" />
@@ -59,7 +59,7 @@ export default {
                 endKaTkRate:null,
                 startKaTkRate:null,
                 itemId:null,
-                pageSize:100,
+                pageSize:50,
                 pageNo:1
             },
             data:[],
