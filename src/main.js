@@ -25,12 +25,16 @@ Axios.interceptors.request.use(function (config) {
     if(reftoken){
       config.headers["referer-token"] = reftoken;
     }
+    
+    iview.LoadingBar.start();
     return  config;
 }, function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
 Axios.interceptors.response.use(res=>{
+    
+    iview.LoadingBar.finish();
     if(res.status >200){
       return Promise.reject({
         errorcode:1,
@@ -48,6 +52,7 @@ Axios.interceptors.response.use(res=>{
       }
     }
 },error=>{
+    iview.LoadingBar.finish();
     return Promise.reject(error);
 })
 
@@ -71,6 +76,11 @@ Vue.prototype.$Message.config({
   duration: 3
 });
 
+
+Vue.prototype.$Identity = {
+  nick:VueCookies.get(".nick"),
+  avatar:VueCookies.get(".avatar")
+}
 
 Vue.prototype.$hasLogin = !!Configure.token();
 
@@ -96,6 +106,13 @@ router.beforeEach((to, from, next) => {
 router.afterEach(route => {
   iview.LoadingBar.finish();
 });
+
+Vue.prototype.$Loading.begin=function(){
+  iview.LoadingBar.start();
+}
+Vue.prototype.$Loading.begin=function(){
+  iview.LoadingBar.finish();
+}
 
 /* eslint-disable no-new */
 new Vue({

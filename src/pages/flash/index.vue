@@ -1,8 +1,10 @@
 <template>
 <div class="body">
-    <div v-if="promotions.length">
+    
+    <AreaPosition position="flash">
+    </AreaPosition>
 
-    </div>
+
     <div class="filter">
 
     </div>
@@ -17,8 +19,12 @@
 
 <script>
 import ProductCard from '../../components/Product/IndexFlashBuyProduct'
+import AreasPosition from '../../components/areas/positions'
 export default {
-    components:{ProductCard},
+    components:{
+        ProductCard,
+        AreasPosition
+    },
     data(){
         return {
             state:{

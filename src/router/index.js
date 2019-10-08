@@ -60,6 +60,14 @@ var router=[
   },
   //优惠热推
   {
+    path: '/talent',
+    name: '/talent',
+    component: (resolve)=>{
+      return require(['../pages/talent/index'],resolve);
+    }
+  },
+  //优惠热推
+  {
     path: '/flash',
     name: '/flash',
     component: (resolve)=>{

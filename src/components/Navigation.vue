@@ -15,7 +15,7 @@
             精选商品
         </div>
     </div>
-    <div @click="onRedirectToPage('/promotion')" :class="`layout-line navigation-item ${getActiveClass('/promotion')}`">
+    <div @click="onRedirectToPage('/talent')" :class="`layout-line navigation-item ${getActiveClass('/talent')}`">
         <div>
             达人带货
         </div>
@@ -52,11 +52,11 @@ export default {
     },
     methods:{
         getActiveClass(path){
-
+            
             if(this.activeName == path){
                 return "active";
             }
-            else if(this.activeName && this.activeName.startsWith(path)){
+            else if( this.activeName && path && path!="/" &&this.activeName.startsWith(path)){
                 return "active";
             }
             return "";

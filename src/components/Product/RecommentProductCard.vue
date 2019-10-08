@@ -53,8 +53,15 @@ export default {
     },
     methods:{
         onRedirectToBuyProduct(){
+            var url =this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.ClickUrl;
+            var relation = this.product.relation;
+            if(url.indexOf('?')<1){
+                url+="?";
+            }
+            if(relation)
+                url+= (relation.relationid?("&relation_id="+relation.relationid):"") + (relation.specialid?("&special_id="+relation.specialid):"")
             //CouponShareUrl,click_url
-            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.ClickUrl,"_blank")
+            window.open(url,"_blank")
         },
         onRedirectToLogin(){
             this.$redirectToLogin();

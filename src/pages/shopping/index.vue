@@ -3,24 +3,26 @@
     <div class="filter">
 
     </div>
-    <div class="products">
-        <div v-if="page.totalResult>50" style="text-align:right;margin-top:10px;margin-right:20px;">
-            <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
-                simple
-                @on-change="onPageChange" />
-        </div>
-        <div>
-        <template v-for="(item,index) in data">
-            <ProductCard class="product-item" :product="item" :key="index">
 
-            </ProductCard>
+    <AreaPosition position="shoping">
+    </AreaPosition>
+
+    <div style="margin-top:30px;width: 100%;background: white;margin-left: auto;margin-right: auto;text-align: left;-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 5px 7px 0px;box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 7px 0px;">
+        <template v-for="(item,index) in categories">
+            <div :class="'cat-item ' +getActive(item)" :style="'width:'+(100/categories.length).toFixed(2)+'%;text-align:center;'" :key="index" @click="onClickCategoriesItem(item)">
+                {{item.text}}
+            </div>
         </template>
         <div style="clear:both;"></div>
-        <div  v-if="page.totalResult>50" style="text-align:center;margin-top:10px;margin-right:20px;">
-            <Page :total="page.totalResult" :current="searchOpts.pageNo" :page-size="searchOpts.pageSize" 
-                simple
-                @on-change="onPageChange" />
-        </div>
+    </div>
+    <div class="products" style="margin-top:20px;">
+        <div>
+            <template v-for="(item,index) in data">
+                <ProductCard class="product-item" :product="item" :key="index">
+
+                </ProductCard>
+            </template>
+            <div style="clear:both;"></div>
         </div>
     </div>
 </div>
@@ -28,8 +30,13 @@
 
 <script>
 import ProductCard from '../../components/Product/ProductCard'
+import AreasPosition from '../../components/areas/positions'
+
 export default {
-    components:{ProductCard},
+    components:{
+        ProductCard,
+        AreasPosition
+    },
     data(){
         return {
             state:{
@@ -62,6 +69,8 @@ export default {
                 pageSize:50,
                 pageNo:1
             },
+            selectedMaterialId:"",
+            categories:[],
             data:[],
             page:{
                 totalResult:0,
@@ -69,11 +78,45 @@ export default {
         }
     },
     created(){
-        this.loadingProduct();
+        //this.loadingProduct();
+        this.loadCategories();
     },
     methods:{
         onSearchProduct(){
 
+        },
+        getActive(item){
+            return item.id == this.selectedMaterialId?"active":"";
+        },
+        onClickCategoriesItem(item){
+            this.selectedMaterialId = item.id;
+            this.loadRankingProduct();
+        },
+        loadCategories(){
+            this.$get("/qn.lego.product.ranking.categories.get",{cat:"hqlive"}).then(data=>{
+                this.categories=data;
+                this.selectedMaterialId = this.categories[0].id;
+                this.loadRankingProduct();
+            }).catch(ex=>{
+                this.state.loading=false;
+                this.$Message.warning(ex.message);
+            })
+        },
+        loadRankingProduct(){
+            this.$get("/qn.lego.product.ranking.categories",{
+                materialId:this.selectedMaterialId
+            }).then(data=>{
+                this.state.loading=false;
+                if(data.isError){
+                    this.$Message.warning("请求数据失败，请重新刷新");
+                    return ;
+                }
+                this.data=data.list;
+                this.page.totalResult = data.totalResult;
+            }).catch(ex=>{
+                this.state.loading=false;
+                this.$Message.warning(ex.message);
+            })
         },
         loadingProduct(){
             var reqd={};
@@ -122,6 +165,17 @@ export default {
 
 <style scoped>
 
+.shopping-filter .ivu-input,.shopping-filter .ivu-select-input{
+    height:26px;
+    line-height: 26px;
+}
+.shopping-filter .ivu-select-selection{
+    height:26px;
+    line-height: 26px;
+}
+.shopping-product-list .ivu-card-body{
+    padding: 0px;
+}
     .body{
         margin-top: 10px;
         width:1184px;
@@ -143,5 +197,21 @@ export default {
     }
     .product-item:last-child{
         margin-right:0px;
+    }
+
+    .cat-item{
+        height: 40px;
+        cursor: pointer;
+        line-height: 40px;
+        font-size: 15px;
+        font-weight: 800;
+        float: left;
+    }
+    .cat-item:hover{
+        color:#fe4800;
+    }
+    .cat-item.active{
+        color:#fe4800;
+        border:1px solid #fe4800;
     }
 </style>

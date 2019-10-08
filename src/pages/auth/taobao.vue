@@ -15,16 +15,10 @@ export default {
                 code:q.code,
                 state:q.state
             }).then(data=>{
-                this.state.loading=false;
-                if(data.isError){
-                    this.$Message.warning("请求数据失败，请重新刷新");
-                    return ;
-                }
-                this.data=data.list;
-                this.totalResult = data.totalResult;
+                //this.state.loading=false;
+                window.location.href=data.redirect_url;
             }).catch(ex=>{
-                this.state.loading=false;
-                this.$Message.warning(ex.message);
+                //this.$Message.warning(ex.message);
             })
         }
     }

@@ -11,10 +11,11 @@
             <div class="inf-steps" style="margin-left:auto;margin-right:auto;">
                 <Steps :current="step">
                     <Step title="阅读协议" :content="step==0?'阅读并同意推广协议':''"></Step>
-                    <Step title="填写个人资料" :content="step==1?'填写个人资料':''"></Step>
-                    <Step title="填写运营资料" :content="step==2?'填写运营资料':''"></Step>
-                    <Step title="待审核" :content="step==3?'等待系统审核':''"></Step>
-                    <Step title="开始推广" :content="step==3?'推广赚钱':''"></Step>
+                    <Step title="授权登录" :content="step==1?'淘宝账号授权登录':''"></Step>
+                    <Step title="填写个人资料" :content="step==2?'填写个人资料':''"></Step>
+                    <Step title="填写运营资料" :content="step==3?'填写运营资料':''"></Step>
+                    <Step title="待审核" :content="step==4?'等待系统审核':''"></Step>
+                    <Step title="开始推广" :content="step==4?'推广赚钱':''"></Step>
                 </Steps>
             </div>
             <div v-if="step==0">
@@ -31,6 +32,17 @@
                 </div>
             </div>
             <div v-else-if="step==1">
+                <div class="inf-area" >
+                    <div class="area-content" style="margin-top:60px;">
+                        <div class="inf-func inf-center" >
+                            <div class="one">
+                                <Button type="primary" @click="onAuthLoginByTaobao">授权登录</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-else-if="step==2">
                 <div class="inf-area" >
                     <div class="area-content" style="margin-top:60px;">
                         <Form  :label-width="80">
@@ -67,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else-if="step==2">
+            <div v-else-if="step==3">
                 <div class="inf-area" style="margin-top:60px;">
                     <div class="inf-item-lh25">
                         <p class="inf-label">姓名：</p>
@@ -93,14 +105,14 @@
                         <div class="one">
                             <div style="display:inline-block;font-size:16px;color:#2d8cf0;height:25px;line-height:25px;padding-left:23px;">
                                 <XIcon type="scan-person" size="23" style="color:#2d8cf0;"/>
-                                <span style="margin-left:23px;">等待审核...</span>
+                                <span style="margin-left:23px;">正在申请...</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div v-else-if="step==3">
+            <div v-else-if="step==4">
                 <div class="inf-area" style="margin-top:60px;">
                     <h3 style="font-size:16px;">
                         推广码: 
@@ -164,6 +176,12 @@ export default {
                 this.load(id);
             }
         }
+        if(this.$route.query.step){
+            this.step =parseInt(this.$route.query.step);
+        }
+        if(this.step==3){
+            this.onApplyToTaobao();
+        }
     },
     methods:{
         onAgreeWithContact(){
@@ -178,23 +196,34 @@ export default {
             });
         },
         onApplyTo(){
-            this.onRedirectToTaobaoOauth();
-            return;
             this.$http.post("/qn.lego.user.media.talent.promotioncode.apply.create",this.applyinfo).then(res=>{
-                this.step =2;
+                this.step =3;
                 //this.applyinfo.state=1;
-                this.onRedirectToTaobaoOauth();
-                //this.onState();
+                this.onState();
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });
         },
-        onRedirectToTaobaoOauth(){
-            this.$http.get("/qn.lego.taobao.oauth.url?state=r.apply.letuigo").then(res=>{
-                this.step =2;
+        onApplyToTaobao(){
+            this.applyinfo.scene="其他";
+            this.$http.post("/qn.lego.user.media.talent.promotioncode.apply.taobao",this.applyinfo).then(res=>{
+                this.step =3;
+                //
+                if(res.needResetAuth){
+                    this.onRedirectToTaobaoOauth();
+                }
                 //this.applyinfo.state=1;
+            }).catch(ex=>{
+                this.$Message.warning(ex.message);
+            });
+        },
+        onAuthLoginByTaobao(){
+            this.onRedirectToTaobaoOauth();
+        },
+        onRedirectToTaobaoOauth(){
+            this.$http.get(`/qn.lego.taobao.oauth.url?state=r.apply.letuigo:${window.encodeURIComponent("id="+(this.applyinfo.id||""))}`).then(res=>{
+                this.step =2;
                 window.location.href = res;
-                //this.onState();
             }).catch(ex=>{
                 this.$Message.warning(ex.message);
             });
