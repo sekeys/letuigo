@@ -34,43 +34,9 @@
             </div>
         </div>
 
-
-        <template v-for="(item,index) in areas">
-            <div class="area-item" :key="index">
-                <div class="header">
-                    <div class="title">
-                        <div class="signal"></div>
-                        {{item.title}} 
-                    </div>
-                    <div class="more">
-                        <a :href="item.href">查看更多</a>
-                    </div>
-                </div>
-                <div class="content">
-                    <div v-if="item.face" class="content-mg" style="width:220px;height:296px;float:left;" @click="onClickAreaFaceRedirect(item)">
-                        <img style="width:100%;height:100%;" :src="item.face"/>
-                    </div>
-                    <template v-for="(jtem,jndex) in item.list">
-                        <RecommentProductCard v-if="item.controllerType=='default' " class="content-mg" :product="jtem" :key="jndex">
-                        </RecommentProductCard>
-                        <IndexFlashBuyProduct v-else-if="item.controllerType == 'flash'" class="content-mg" :product="jtem" :key="jndex">
-                        </IndexFlashBuyProduct>
-                        <IndexSubcribeProduct v-else-if="item.controllerType == 'subscribe'" class="content-mg" :product="jtem" :key="jndex">
-                        </IndexSubcribeProduct>
-                        <IndexGoldProduct v-else-if="item.controllerType == 'gold'" class="content-mg" :product="jtem" :key="jndex">
-                        </IndexGoldProduct>
-                        <IndexProviderProduct v-else-if="item.controllerType == 'provider'" class="content-mg" :product="jtem" :key="jndex">
-                        </IndexProviderProduct>
-                        <IndexShareProduct v-else-if="item.controllerType == 'share'" class="content-mg" :product="jtem" :key="jndex">
-                        </IndexShareProduct>
-                        <RecommentProductCard v-else class="content-mg" :product="jtem" :key="jndex">
-                        </RecommentProductCard>
-                    </template>
-                </div>
-            </div>
-        </template>
         
-
+        <AreasPosition  :position="'index'">
+        </AreasPosition>
   </div>
 </template>
 
@@ -82,6 +48,7 @@ import IndexGoldProduct from '../components/Product/IndexGoldProduct'
 import IndexProviderProduct from '../components/Product/IndexProviderProduct'
 import IndexShareProduct from '../components/Product/IndexSubcribeProduct'
 import IndexSubcribeProduct from '../components/Product/IndexShareProduct'
+import AreasPosition from '../components/areas/positions'
 
 export default {
     components:{
@@ -91,21 +58,19 @@ export default {
         IndexGoldProduct,
         IndexProviderProduct,
         IndexSubcribeProduct,
-        IndexShareProduct
+        IndexShareProduct,
+        AreasPosition
 
     },
     data(){
         return {
             carsouelIndex:0,
-            categories:[],
-            areas:[]
+            categories:[]
         };
     },
     created(){
         //加载推荐
         this.loadRecommend();
-        //加载域模块
-        this.loadAreas();
     },
     methods:{
         loadRecommend(){
@@ -124,25 +89,9 @@ export default {
                 this.$Message.warning(ex.message);
             })
         },
-        loadAreas(){
-            this.$get("/qn.lego.product.query.taobao",{
-                q:"女装",
-                pageSize:5,
-                pageNo:1,
-                platform:1,
-            }).then(data=>{
-                if(data.isError){
-                    this.$Message.warning("请求数据失败，请重新刷新");
-                    return ;
-                }
-                this.categories=data.list;
-            }).catch(ex=>{
-                this.$Message.warning(ex.message);
-            })
-        },
         onClickAreaFaceRedirect(item){
             this.$router.push({
-                path:item.href
+                path:item.morehref
             });
         }
     },

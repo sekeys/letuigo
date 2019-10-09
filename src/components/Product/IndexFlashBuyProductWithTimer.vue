@@ -91,6 +91,13 @@ export default {
     methods:{
         onRedirectToBuyProduct(){
             //CouponShareUrl,click_url
+            var relation = this.product.relation;
+            if(url.indexOf('?')<1){
+                url+="?";
+            }
+            
+            if(relation)
+                url+= (relation.relationid?("&relation_id="+relation.relationid):"") + (relation.specialid?("&special_id="+relation.specialid):"")
             window.open(this.product.product.clickUrl,"_blank")
         },
         onRedirectToLogin(){

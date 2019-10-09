@@ -83,8 +83,15 @@ export default {
     },
     methods:{
         onRedirectToBuyProduct(){
+            var url =this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.Url;
+            var relation = this.product.relation;
+            if(url.indexOf('?')<1){
+                url+="?";
+            }
+            if(relation)
+                url+= (relation.relationid?("&relation_id="+relation.relationid):"") + (relation.specialid?("&special_id="+relation.specialid):"")
             //CouponShareUrl,click_url
-            window.open(this.product.product.CouponShareUrl ?this.product.product.CouponShareUrl:this.product.product.Url,"_blank")
+            window.open(url,"_blank")
         },
         onRedirectToLogin(){
             this.$redirectToLogin();
@@ -93,7 +100,15 @@ export default {
             this.state.showLoginWarning = false;
         },
         onTitleClick(){
-            window.open(this.product.product.Url,"_blank");
+            var url =this.product.product.ClickUrl || this.product.product.Url;
+            var relation = this.product.relation;
+            if(url.indexOf('?')<1){
+                url+="?";
+            }
+            
+            if(relation)
+                url+= (relation.relationid?("&relation_id="+relation.relationid):"") + (relation.specialid?("&special_id="+relation.specialid):"")
+            window.open(url,"_blank");
         },
         onRedirectToShare(){
             if(!this.hasLogin){

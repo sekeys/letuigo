@@ -18,10 +18,10 @@
                     消息({{msgcount}})
                 </div>
                 <div class="layout-line-split">|</div>
-                <div class="layout_line high-light-font">
+                <!--<div class="layout_line high-light-font">
                     公众号
                 </div>
-                <div class="layout-line-split">|</div>
+                <div class="layout-line-split">|</div>-->
                 <div @click="onRedirectToHelpPage" class="layout_line high-light-font">
                     帮助中心
                 </div>
@@ -50,14 +50,15 @@ export default {
         };
     },
     created(){
-
+       this.nick =  this.$Identity.nick;
+       this.hasLogin =  this.$hasLogin;
     },
     methods:{
         onRedirectToLogin(){
             this.$redirectToLogin();
         },
         onRedirectToPersonInfo(){
-
+            window.location.href="/m/account";
         },
         onRedirectToHelpPage(){
             
@@ -81,7 +82,7 @@ export default {
                 }
             }
             catch(e){
-                console.log("加入收藏失败，\n请使用Ctrl+D进行添加！"); 
+                this.$Message.warning("加入收藏失败，\n请使用Ctrl+D进行添加！"); 
 　　        }
         }
     }

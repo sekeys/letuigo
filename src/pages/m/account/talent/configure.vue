@@ -24,7 +24,7 @@
             <h3>
                 我的推广码: 
                 <span v-if="current.state==2" style="display:inline-block;margin-left:10px;"> 
-                    {{promotioncode}}
+                    {{current.promotioncode}}
                 </span>
                 <span v-else-if="current.state!=2 && current.state !=0" style="display:inline-block;margin-left:10px;font-weight:500;font-size:13px">
                     <span class="gocertify">审核中</span>
